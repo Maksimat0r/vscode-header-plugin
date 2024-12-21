@@ -1,0 +1,30 @@
+{
+  "name": "vscode-header-plugin",
+  "version": "1.0.0",
+  "publisher": "your-publisher-name",
+  "description": "Your extension description...",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "main": "./extension.js",
+  "activationEvents": [
+    "onCommand:extension.sayHello"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.sayHello",
+        "title": "Say Hello"
+      }
+    ]
+  },
+  "scripts": {
+  "test": "npx @vscode/test-electron --extensionDevelopmentPath=${workspaceFolder} --vscodeVersion=1.75.0"
+},
+  "devDependencies": {
+    "@types/vscode": "^1.96.0",
+    "@vscode/test-electron": "^2.4.1",
+    "vscode": "^1.1.34",
+    "vscode-test": "^1.6.1"
+  }
+}
