@@ -1,23 +1,21 @@
 const vscode = require('vscode');
 
-/**
- * Функция, вызываемая при активации расширения
- * @param {vscode.ExtensionContext} context
- */
 function activate(context) {
-    console.log('Extension "vscode-header-plugin" is now active!');
-
-    // Пример: регистрируем команду "extension.sayHello"
-    let disposable = vscode.commands.registerCommand('extension.sayHello', function () {
-        vscode.window.showInformationMessage('Hello from Header Plugin!');
+    let disposable = vscode.workspace.onDidOpenTextDocument((document) => {
+        if (document.getText().length === 0) {
+            const edit = new vscode.WorkspaceEdit();
+            const fileName = document.uri.fsPath.split('/').pop(); // Получаем имя файла
+            const headerText = `/**\n * File Name: ${fileName}\n * File created: ${new Date().toISOString()}\n * Author: ${process.env.USERNAME || process.env.USER || 'Developer'}\n */\n\n`;
+            
+            edit.insert(document.uri, new vscode.Position(0, 0), headerText);
+          
+            vscode.workspace.applyEdit(edit);
+        }
     });
 
     context.subscriptions.push(disposable);
 }
 
-/**
- * Функция, вызываемая при деактивации расширения
- */
 function deactivate() {}
 
 module.exports = {
